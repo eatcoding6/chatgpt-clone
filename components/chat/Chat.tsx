@@ -46,7 +46,7 @@ export function Chat({ initialMessages }: Props) {
     if (initialMessages) {
       setMessages(initialMessages);
     }
-  }, []);
+  }, [initialMessages, setMessages]);
 
   useEffect(() => {
     if (scrollRef.current) {

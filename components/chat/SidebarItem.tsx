@@ -105,6 +105,7 @@ export function SidebarItem({ item }: Props) {
   };
 
   const clickEdit = (event: MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
     event.preventDefault();
     setIsEditMode(true);
     setIsMenuOpen(false);
