@@ -27,15 +27,16 @@ export const verify = async (session: string | undefined = "") => {
 
     return payload;
   } catch (error) {
-    console.error("토큰 검증에 실패하였습니다.");
+    console.log("토큰 검증에 실패하였습니다.");
   }
 };
 
 export const createSession = async (payload: SessionPayload) => {
   const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
   const session = await encrypt(payload);
+  const cookieStore = await cookies();
 
-  cookies().set("session", session, {
+  cookieStore.set("session", session, {
     httpOnly: true,
     secure: true,
     expires: expiresAt,
@@ -44,12 +45,14 @@ export const createSession = async (payload: SessionPayload) => {
   });
 };
 
-export const deleteSession = () => {
-  cookies().delete("session");
+export const deleteSession = async () => {
+  const cookieStore = await cookies();
+  cookieStore.delete("session");
 };
 
 export const verifySession = async () => {
-  const cookie = cookies().get("session")?.value;
+  const cookieStore = await cookies();
+  const cookie = cookieStore.get("session")?.value;
   const session = await verify(cookie);
 
   if (!session?.id) {

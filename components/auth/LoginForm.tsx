@@ -1,8 +1,7 @@
 "use client";
 
 import { useFormValidate } from "@/hooks/useFormValidate";
-import { ChangeEvent, useEffect } from "react";
-import { useFormState } from "react-dom";
+import { ChangeEvent, useActionState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { FormCard } from "./FormCard";
 import { Label } from "../ui/label";
@@ -14,7 +13,7 @@ import { LoginSchema } from "@/schemas/auth";
 import { login } from "@/actions/login";
 
 export function LoginForm() {
-  const [error, action] = useFormState(login, undefined);
+  const [error, action] = useActionState(login, undefined);
   const { errors, validateField } =
     useFormValidate<TLoginFormError>(LoginSchema);
 

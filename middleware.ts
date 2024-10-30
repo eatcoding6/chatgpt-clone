@@ -7,8 +7,9 @@ import { verify } from "./actions/sessions";
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
+  const cookieStore = await cookies();
 
-  const cookie = cookies().get("session")?.value;
+  const cookie = cookieStore.get("session")?.value;
   const session = await verify(cookie);
 
   if (!isPublicRoute && !session) {
